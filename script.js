@@ -11,9 +11,10 @@ const animateHiHatClosed = () => {
 }
 
 window.addEventListener('keydown', (event) => {
-    //console.log(event);
+    console.log(event);
 
     let code = event.keyCode;
+    console.log(code);//broj
 
     let keyElement = document.querySelector(`div[data-key="${code}"]`);
 
@@ -74,3 +75,37 @@ drumKeys.forEach(key => {
 
 crashRide.addEventListener('transitionend', removeCrashRideTransition);
 hiHatTop.addEventListener('transitionend', removeHiHatTopTransition);
+
+window.addEventListener('click', (event) => {
+    console.log(event)
+
+
+    let name = event.target;
+    console.log(name)
+    let code = name.dataset.key;
+    code = parseInt(code);
+    console.log(code);
+    let keyElement = document.querySelector(`div[data-key="${code}"]`);
+    
+    if(!keyElement) return;
+
+    let audio = document.querySelector(`audio[data-key="${code}"]`);
+    audio.currentTime = 0;
+    audio.play();
+
+      switch(code) {
+        case 69:
+        case 82:
+            animateCrashOrRide();
+            break;
+        case 75:
+        case 73:
+            animateHiHatClosed();
+            break;
+    }
+
+     keyElement.classList.add('playing');
+
+    
+    
+});
